@@ -20,5 +20,3 @@
 - baseline_IO.py: reproducing code for *Inverse optimization approach to the identification of electricity consumer models*
 - baseline_NN.py: two forward ReLU NN for behavior prediction
 - gradient_method.py: our model for DR identification
-- 
-
