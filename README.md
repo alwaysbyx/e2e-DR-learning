@@ -10,7 +10,7 @@
 
 
 ## Building model
-- dataset: contain price and ambient data, from **
+- dataset: contain price and ambient data, from *Fernández-Blanco, R., Morales, J. M., & Pineda, S. (2020). Forecasting the Price-Response of a Pool of Buildings via Homothetic Inverse Optimization* (https://github.com/groupoasys/homothetic)
 - baseline_NN.py: Neural network as baseline to predict the power consumation
 - gradient_method.py: Our approach
 - utils.py: contain the solve function and etc.
