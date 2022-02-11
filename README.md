@@ -6,7 +6,7 @@
 - MLP.py: baseline
 - plot.py
 - post_processing.py
-- utils,py
+- utils.py
 
 
 ## Building model
