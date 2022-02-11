@@ -1,8 +1,24 @@
 # e2e-DR-learning
+## Energy storage model
+- ESID-data: data in the experiment
+- data_generation.py
+- main.py
+- MLP.py: baseline
+- plot.py
+- post_processing.py
+- utils,py
+
+
 ## Building model
-- baseline.ipynb: Neural network as baseline to predict the power consumation
+- dataset: contain price and ambient data, from **
+- baseline_NN.py: Neural network as baseline to predict the power consumation
+- gradient_method.py: Our approach
+- utils.py: contain the solve function and etc.
 
 ## Electricity consumer model
-- IO.ipynb: reproducing code for *Inverse optimization approach to the identification of electricity consumer models*
-- model.ipynb: our model for DR identification
-- dataset: the input data for experiment
+- dataset: contain all the input data in the experiments
+- baseline_IO.py: reproducing code for *Inverse optimization approach to the identification of electricity consumer models*
+- baseline_NN.py: two forward ReLU NN for behavior prediction
+- gradient_method.py: our model for DR identification
+- 
+
