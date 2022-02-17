@@ -1,12 +1,13 @@
 # e2e-DR-learning
 ## Energy storage model
-- ESID-data: data in the experiment
-- data_generation.py
-- main.py
-- MLP.py: baseline
-- plot.py
-- post_processing.py
-- utils.py
+- ESID-data: NYISO 2019 real-time electricity price data.
+- Results: Contain 10 random generated data: data1-data10. Figures and post-processing data also in this folder.
+- data_generation.py: generate random ground truth parameters. Random select dates in real-time price data to generate true dispatch data for training and validation.
+- main.py: using OptNet to learn parameters with training data, check validation loss with learned parameters.
+- MLP.py: baseline, using two-layer forward ReLU network, return validation losses of differet data and iteration numbers.
+- plot.py: make figures for energy storage models.
+- post_processing.py: using differernt iteration numbers OptNet learned parameters to calculate validation loss.
+- utils.py: functions used in other scripts.
 
 
 ## Building model
