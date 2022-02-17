@@ -3,10 +3,8 @@ import pandas as pd
 from utils import data_generator
 
 ## data dimension
-N_train = 110
+N_train = 110 # sum of training and valiadation set
 dim = 24
-hidden_dim = 2
-output_dim = 24
 
 ## initialize parameters
 c1_value = round(np.random.uniform(0, 20),2)
@@ -31,16 +29,9 @@ print(
 )
 
 ## load price data
-
 price_hist = pd.read_csv("./ESID_data/price.csv")
 
-## generate dispatch data and save price
-# df_price, df_dp = data_generator(c1_value=c1_value, c2_value=c2_value,
-#                                 upperbound_p=bound/12, lowerbound_p=0,
-#                                 upperbound_e=2*bound, lowerbound_e=0,
-#                                 initial_e=bound, efficiency=eta,
-#                                 price_hist = price_hist, N=N_train, T=dim)
-
+## generate dispatch data and save price, true parameters
 df_price, df_d, df_p = data_generator(
     c1_value,
     c2_value,
