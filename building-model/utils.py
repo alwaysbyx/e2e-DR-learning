@@ -28,10 +28,8 @@ def solve(price, amb, T, pn, a1, a3, max_theta, min_theta, max_power, theta_0, t
     return p.value, theta.value, y.value
 
 
-def model(price_data, amb_data):
+def model(price_data, amb_data, theta_0, T = 24*5):
     i = 0
-    T = 24*5
-    theta_0 = 21.64671372
 
     pn_p = cp.Parameter(1,nonneg=True)
     a1_p = cp.Parameter(1)
