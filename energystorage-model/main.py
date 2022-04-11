@@ -33,14 +33,11 @@ y_tensor = tuple([d_tensor, p_tensor])
 
 torch.manual_seed(0)
 layer = PolytopeProjection(P1, P2, T)
-opt1 = optim.Adam(layer.parameters(), lr=1e-1)
+opt1 = optim.Adam(layer.parameters(), lr=1e-2)
 
 df = pd.DataFrame(columns=("loss", "c1", "c2", "E1", "E2", "eta"))
 
 for ite in range(500):
-    if ite == 500:
-        opt1.param_groups[0]["lr"] = 1e-2
-
     dp_pred = layer(price_tensor)
 
     loss = nn.MSELoss()(y_tensor[0], dp_pred[0]) + nn.MSELoss()(y_tensor[1], dp_pred[1])

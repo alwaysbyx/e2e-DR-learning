@@ -29,7 +29,6 @@ for i in range(10):
     model.compile(optimizer='adam',
                 loss=tf.keras.losses.MeanSquaredError())
     history = model.fit(X_train, y_train, epochs=500, validation_data=(X_valid, y_valid),batch_size=len(X_train))
-
     df.loc[i] = [history.history['val_loss'][0], history.history['val_loss'][99], history.history['val_loss'][199], history.history['val_loss'][299], history.history['val_loss'][399], history.history['val_loss'][499]]
 
 
