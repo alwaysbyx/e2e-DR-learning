@@ -9,6 +9,13 @@ import torch.nn.functional as F
 from numpy import linalg 
 from itertools import accumulate
 
+def solve(price,u,M,L,k,T=12):
+    x = cp.Variable((k,T))
+    obj = 3*cp.sum(price@x.T) - cp.sum(u@x.T)
+    problem = cp.Problem(cp.Minimize(obj), [x <= L, x >= 0, cp.sum(x,axis=1) == M])
+    problem.solve()
+    return x.value
+
 class Layer(nn.Module):
     def __init__(self,N,T=12):
         super().__init__()

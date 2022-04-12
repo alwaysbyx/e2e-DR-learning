@@ -18,7 +18,7 @@ import argparse
 def train(layer, true, iters=1000, choice=1, random_seed=1, show=False):
     torch.manual_seed(random_seed)
     np.random.seed(random_seed)
-    pn_t = torch.tensor([0.1]).double().requires_grad_(True)
+    pn_t = torch.tensor([0.05]).double().requires_grad_(True)
     a1_t = torch.tensor([0.5]).double().requires_grad_(True)
     a3_t = torch.tensor([0.5]).double().requires_grad_(True)
     max_theta_t = torch.tensor([18.5]).double().requires_grad_(True)   
