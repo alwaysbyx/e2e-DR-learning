@@ -45,4 +45,3 @@ For baseline comparison, you can use the following method to save the identified
 ```python
 python baseline_IO.py --K --noise 2 --save True
 ```
-/Users/bb/Desktop/UCSD/research/E2E/e2e-DR-learning/building-model
