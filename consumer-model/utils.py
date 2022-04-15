@@ -1,4 +1,3 @@
-
 import numpy as np
 import cvxpy as cp
 import torch
@@ -17,15 +16,15 @@ def solve(price,u,M,L,k,T=12):
     return x.value
 
 class Layer(nn.Module):
-    def __init__(self,N,T=12):
+    def __init__(self,K,T=12):
         super().__init__()
         
-        self.u = nn.Parameter(3*torch.ones(N,T).double())
+        self.u = nn.Parameter(3*torch.ones(K,T).double())
         self.M = nn.Parameter(torch.Tensor([8,7,9]).double())
-        self.L = nn.Parameter(5*torch.ones(N,T).double())
+        self.L = nn.Parameter(5*torch.ones(K,T).double())
    
-        obj = (lambda x1,x2,x3, price, u, M, L: N*cp.sum(price@cp.vstack([x1,x2,x3]).T) - cp.sum(u@cp.vstack([x1,x2,x3]).T)
-               if isinstance(x1, cp.Variable) else N*torch.sum(price@torch.vstack([x1,x2,x3]).T) - torch.sum(u@torch.vstack([x1,x2,x3]).T))
+        obj = (lambda x1,x2,x3, price, u, M, L: K*cp.sum(price@cp.vstack([x1,x2,x3]).T) - cp.sum(u@cp.vstack([x1,x2,x3]).T)
+               if isinstance(x1, cp.Variable) else K*torch.sum(price@torch.vstack([x1,x2,x3]).T) - torch.sum(u@torch.vstack([x1,x2,x3]).T))
         ineq1 = lambda x1,x2,x3, price, u, M, L:  x1 - L[0]
         ineq2 = lambda x1,x2,x3, price, u, M, L:  x2 - L[1]
         ineq3 = lambda x1,x2,x3, price, u, M, L:  x3 - L[2]
@@ -33,7 +32,7 @@ class Layer(nn.Module):
         ineq5 = lambda x1,x2,x3, price, u, M, L:  -x2
         ineq6 = lambda x1,x2,x3, price, u, M, L:  -x3
         eq1 = lambda x1,x2,x3, price, u, M, L:  cp.sum(cp.vstack([x1,x2,x3]),axis=1) - M if isinstance(x1, cp.Variable) else torch.sum(torch.vstack([x1,x2,x3]),axis=1) - M                                                 
-        self.layer = OptLayer([cp.Variable(T), cp.Variable(T), cp.Variable(T)], [cp.Parameter(T), cp.Parameter((N,T)), cp.Parameter(N), cp.Parameter((N,T))],
+        self.layer = OptLayer([cp.Variable(T), cp.Variable(T), cp.Variable(T)], [cp.Parameter(T), cp.Parameter((K,T)), cp.Parameter(K), cp.Parameter((K,T))],
                               obj, [ineq1,ineq2,ineq3,ineq4,ineq5,ineq6], [eq1])
 
     def forward(self, price):
