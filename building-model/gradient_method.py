@@ -41,10 +41,11 @@ def train(layer, true, iters=1000, choice=1, random_seed=1, show=False):
         loss.backward()
         optimizer.step()
         
-        pn_t.data = torch.clamp(pn_t.data, min=0.01, max=1) 
-        a1_t.data = torch.clamp(a1_t.data, min=0.01, max=1) 
-        a3_t.data = torch.clamp(a3_t.data, min=0.01, max=1) 
-        max_power_t.data = torch.clamp(max_power_t.data, min=0.1, max=10) 
+        with torch.no_grad():
+            pn_t.data = torch.clamp(pn_t.data, min=0.01, max=0.1) 
+            a1_t.data = torch.clamp(a1_t.data, min=0.01, max=1) 
+            a3_t.data = torch.clamp(a3_t.data, min=0.01, max=1) 
+            max_power_t.data = torch.clamp(max_power_t.data, min=0.1, max=10) 
         
         results.append(loss.item())
         if i % 100==0: print("(iter %d) loss: %g " % (i, results[-1]))
@@ -52,6 +53,8 @@ def train(layer, true, iters=1000, choice=1, random_seed=1, show=False):
             optimizer.param_groups[0]["lr"] = 0.1
         if i == 200:
             optimizer.param_groups[0]["lr"] = 0.05
+        if i == 800:
+            optimizer.param_groups[0]["lr"] = 0.01
         if show:
             im = plt.plot(results,color='gray')
             anno = plt.annotate(f'step:{i}\n loss={loss}', xy=(0.85, 0.9), xycoords='axes fraction',color='black')
@@ -88,14 +91,14 @@ def experiment(layer,seed1,theta_0, price, amb, choice, seed2, show, T=24*5):
     
     true = solve(price, amb, T, pn_value, a1_value, a3_value, max_theta, min_theta, max_power, theta_0, tensor=True)
 
-    variables, record = train(layer, true, 1000, choice, seed2, show)
+    variables, record = train(layer, true, 600, choice, seed2, show)
     
-    pn_ = (variables[0][0] - pn_value) / pn_value
-    a1_ = (variables[1][0] - a1_value) / a1_value
-    a3_ = (variables[2][0] - a3_value) / a3_value
-    max_theta_ = (variables[3][0] - max_theta) / max_theta
-    min_theta_ = (variables[4][0] - min_theta) / min_theta
-    max_power_ = (variables[5][0] - max_power) / max_power
+    pn_ = ((variables[0][0] - pn_value)**2)**0.5
+    a1_ = ((variables[1][0] - a1_value)**2)**0.5
+    a3_ = ((variables[2][0] - a3_value)**2)**0.5
+    max_theta_ = ((variables[3][0] - max_theta)**2)**0.5
+    min_theta_ = ((variables[4][0] - min_theta)**2)**0.5
+    max_power_ = ((variables[5][0] - max_power)**2)**0.5
     print(pn_,a1_,a3_,max_theta_,min_theta_,max_power_)
     
     return [v[0] for v in variables], [pn_value,a1_value,a3_value,max_theta,min_theta,max_power], [pn_,a1_,a3_,max_theta_,min_theta_,max_power_]
@@ -114,14 +117,18 @@ if __name__ == '__main__':
     amb_data = np.array(pd.read_excel('dataset/input_data_pool.xlsx',sheet_name='theta_amb')['theta_amb'])
     price_data = np.array(pd.read_excel('dataset/input_data_pool.xlsx',sheet_name='price')['price'])
     
-    theta_0 = 21.64671372 # according to one history sample, you can change it as you like
+    #theta_0 = 21.64671372 # according to one history sample, you can change it as you like
+    theta_0 = 35.00
     layer1 = model(price_data, amb_data, theta_0, opts.T)
 
     record = []
     record_variable = []
     record_true = []
     for i in range(opts.num):
-        r1, r2, r3 = experiment(layer1, i, theta_0, price_data, amb_data, opts.choice, opts.seed, opts.show, opts.T)
+        try:
+            r1, r2, r3 = experiment(layer1, i, theta_0, price_data, amb_data, opts.choice, opts.seed, opts.show, opts.T)
+        except Exception as e:
+            continue
         record_variable.append(r1.copy())
         record_true.append(r2.copy())
         record.append(r3.copy())
