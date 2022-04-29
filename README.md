@@ -10,7 +10,7 @@ pip install -r requirements.txt
 - Results: Contain 10 random generated data: data1-data10. Figures and post-processing data also in this folder.
 - data_generation.py: generate random ground truth parameters. Random select dates in real-time price data to generate true dispatch data for training and validation.
 - main.py: using OptNet to learn parameters with training data, check validation loss with learned parameters.
-- MLP.py: baseline, using two-layer forward ReLU network, return validation losses of differet data and iteration numbers.
+- MLP.py: baseline, using three-layer forward ReLU network, return validation losses of differet data and iteration numbers.
 - plot.py: make figures for energy storage models.
 - post_processing.py: using differernt iteration numbers OptNet learned parameters to calculate validation loss.
 - utils.py: functions used in other scripts.
@@ -32,7 +32,7 @@ python gradient_method.py --num 10 --save True --seed 1234 --choice 2
 # Electricity consumer model
 - dataset: contain all the input data in the experiments
 - baseline_IO.py: reproducing code for *Inverse optimization approach to the identification of electricity consumer models*
-- baseline_NN.py: two forward ReLU NN for behavior prediction
+- baselines.py: RNN and MLP model
 - gradient_method.py: our model for DR identification
 
 ## Usage
