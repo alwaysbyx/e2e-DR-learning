@@ -1,10 +1,22 @@
 # e2e-DR-learning
+# Paper
+For more details, please see our paper [Demand Response Model Identification and Behavior Forecast with OptNet: a Gradient-based Approach](https://dl.acm.org/doi/abs/10.1145/3538637.3538871) which has been accepted at ACM E-energy, 2022. If this is useful for your work, please cite our paper:
+```
+@inproceedings{bian2022demand,
+  title={Demand response model identification and behavior forecast with OptNet: a gradient-based approach},
+  author={Bian, Yuexin and Zheng, Ningkun and Zheng, Yang and Xu, Bolun and Shi, Yuanyuan},
+  booktitle={Proceedings of the Thirteenth ACM International Conference on Future Energy Systems},
+  pages={418--429},
+  year={2022}
+}
+```
+
+
 # Install Package
 Install the package
 ```python
 pip install -r requirements.txt
 ```
-
 # Energy storage model
 - ESID-data: NYISO 2019 real-time electricity price data.
 - Results: Contain 10 random generated data: data1-data10. Figures and post-processing data also in this folder.
